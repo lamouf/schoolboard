@@ -78,11 +78,6 @@ class SchoolboardController extends Controller
         } else {
             $message = 'You reached the max of grades per student';
         }
-//        return redirect()->route('schoolboard.student', [
-//                'schoolboardId' => $schoolboardId,
-//                'student_id'    => $studentId
-//            ]
-//        )->with('message' , $message);
         return redirect()->back()->withErrors('message', $message);
     }
 
