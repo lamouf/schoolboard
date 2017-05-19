@@ -26,17 +26,24 @@ class ExampleTest extends TestCase
         $this->assertNotNull($s);
     }
 
-    public function testGradesStudent()
+    public function testMatchingStudentId()
     {
         $s = Student::find(3);
 
         $this->assertTrue(($s->id == 3));
     }
 
-    public function  testSaveGradeForStudent()
+    public function  testChanginSchooBoartForExistingStudent()
     {
         $student = Student::first();
-        $scoolboard = Schoolboard::first();
+        $initialSchoolBoard = $student->schoolboard()->first();
+        $oldId = $initialSchoolBoard->id;
+        $newId =  ( $oldId == 1) ? 2 : 1;
+        $student->schoolboard_id = $newId;
+        $student->save();
+        $obj = Student::first();
+
+        $this->assertTrue(($oldId != $obj->schoolboard_id));
 
     }
 }

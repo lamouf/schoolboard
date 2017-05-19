@@ -7,17 +7,6 @@ namespace App\Services;
  */
 class DataConverter
 {
-
-    /**
-     * @var array
-     */
-    private $data = [];
-
-    /**
-     * @var
-     */
-    private $xml;
-
     /**
      * @param array $data
      * @return mixed
