@@ -8,44 +8,36 @@
 </p>
 
 ## About MindGeek School Board Manager
+This application it is made to allow to show a student belongint to a certain school bord with his grades:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+### Features:
+    path '/' : the root app shows the list of two school boards
+    path '/schoolboard/1' : shows the students of the school board 1
+    path '/schoolboard/1/student/12 : shows the student with id = 12 of the school board 1
+        - we can see the list of grades of the current students
+        - we can add a grade to the current student with post form 
+        - when we send the new grade to the student a certain logic is done to :
+            - calculate the average
+            - checks if the student has failed or succeeded
+            - generate xml or json content before to log it in storage/logs/laravel.log
+            
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
-
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
-
-- **[Vehikl](http://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Styde](https://styde.net)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+### Requisit :
+    - This application is written with php7.0
+    - Make sure to have installed the appropriate db drivers pdo_sqlite in this case
+    - Notice that i removed the db config from .env file 
+    ( because the path to sqlite file is not resolved this way for i do not know what is the exact reason)
+    - the db config is in config/database.php file and the database file is database/schoolboard.sqlite
+    - put the application folder in place reachable by a running web server
+        
+### Run the application
+    Once all the environment correctly set (Db config and drivers, php extensions)
+    - run composer install to install all the needed packages defined in composer.json
+    - then 'run php artisan migrate' to install the db schema defined in the migrations.
+    - run 'php artisan db:seed' The seeds are created to populate the database (fake data to work with).
+    (you can find sutents with more 4 grades, for those cases, when you try to add a grade it will not be saved)
+    - Go to the browser and write the url address on the navigation bar
+    
+ Any Question is Welcomed,
+ Enjoy.
+ Lamara Mouffok

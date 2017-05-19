@@ -36,6 +36,9 @@
         </nav>
 
         <div class="container">
+
+
+            @yield('breadcrumb')
             @yield('content')
         </div>
 

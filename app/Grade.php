@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Grade extends Model
 {
 
+    protected $visible = ['grade'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -14,5 +14,5 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/student', function (Request $request) {
-    return App\Student::find(1);
+//    return App\Student::find(1);
 });
