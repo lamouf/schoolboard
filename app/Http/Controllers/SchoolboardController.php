@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\StudentRepository;
 use App\Student;
 use App\Schoolboard;
+use App\Repositories\SchoolBoardRepository;
 use App\Http\Requests\StudentGradeFromRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 
 /**
  * Class SchoolboardController
@@ -13,65 +17,60 @@ use App\Http\Requests\StudentGradeFromRequest;
 class SchoolboardController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param SchoolBoardRepository $schoolBoardRepository
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(SchoolBoardRepository $schoolBoardRepository)
     {
-        $schoolboards = Schoolboard::all();
-        return view('schoolboard.index', ['schoolboards' => $schoolboards]);
+        return view('schoolboard.index', ['schoolboards' => $schoolBoardRepository->all()]);
     }
 
     /**
+     * @param SchoolBoardRepository $schoolBoardRepository
      * @param $schoolboardId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function students($schoolboardId)
+    public function students(SchoolBoardRepository $schoolBoardRepository,  $schoolboardId)
     {
-        $schoolboard = Schoolboard::find($schoolboardId);
+        $schoolboard = $schoolBoardRepository->findOne($schoolboardId);
         if (empty($schoolboard)) {
             return redirect()->route('schoolboard.index');
         }
-        $students = $schoolboard->students()->get();
 
         return view('schoolboard.students' , [
-            'schoolboard' => $schoolboard ,
-            'students' => $students
+            'schoolboard' => $schoolboard
             ]
         );
-
     }
 
     /**
+     * @param StudentRepository $students
      * @param $schoolboardId
      * @param $studentId
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function student($schoolboardId , $studentId)
+    public function student( StudentRepository $students, $schoolboardId , $studentId)
     {
-        $student = Student::where(['id' => $studentId , 'schoolboard_id' => $schoolboardId ])->first();
+        $student = $students->findOne($studentId);
         if (empty($student)) {
-            return redirect()->route('schoolboard.student', ['schoolboardId' => $schoolboardId]);
+            return redirect()->route('schoolboard.students', ['schoolboardId' => $schoolboardId]);
         }
 
         return  view('schoolboard.student', [
-            'student'       => $student,
-            'schoolboard'   => $student->schoolboard,
-            'grades'        => $student->grades
+            'student'       => $student
         ]);
     }
 
 
     /**
      * @param StudentGradeFromRequest $form
-     * @return \Illuminate\Http\RedirectResponse
+     * @param StudentRepository $students
+     * @return RedirectResponse
      */
-    public function addGrade(StudentGradeFromRequest $form)
+    public function addGrade(StudentGradeFromRequest $form, StudentRepository $students)
     {
-        $schoolboardId = $form->input('schoolboard_id');
         $studentId = $form->input('student_id');
-        $student = Student::where(['id' => $studentId , 'schoolboard_id' => $schoolboardId ])->first();
+        $student = $students->findOne($studentId);
         $message = null;
         if (!$student->hasReachedMaxOfGrades()) {
             $form->save();

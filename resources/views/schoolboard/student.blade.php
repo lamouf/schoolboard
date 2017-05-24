@@ -3,7 +3,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li><a href="{{  route("schoolboard.index") }}">School Boards</a></li>
-        <li><a href="{{  route("schoolboard.students", ['schoolboardId' => $schoolboard->id ]) }}">{{ $schoolboard->name }}</a></li>
+        <li><a href="{{  route("schoolboard.students", ['schoolboardId' => $student->schoolboard->id ]) }}">{{ $student->schoolboard->name }}</a></li>
         <li class="active">{{ $student->firstname }} {{ $student->lastname }}</li>
     </ol>
 @endsection
@@ -49,8 +49,8 @@
             @endforeach
 
             <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
-                {!!  Form::open(['route' => 'schoolboard.add_grade', 'method' => 'post', 'class' => 'navbar-form navbar-left']) !!}
-                {{ Form::hidden('schoolboard_id', $schoolboard->id) }}
+                {!! Form::open(['route' => 'schoolboard.add_grade', 'method' => 'post', 'class' => 'navbar-form navbar-left']) !!}
+                {{ Form::hidden('schoolboard_id', $student->schoolboard->id) }}
                 {{ Form::hidden('student_id', $student->id) }}
                 <div class="form-group">
                     {{ Form::number('grade', 0, ['class' => 'form-control']) }}
@@ -61,7 +61,7 @@
         </div>
         <div class="row">
             <ul class="list-group">
-                @foreach($grades as $key => $grade)
+                @foreach($student->grades as $key => $grade)
                     <li class="list-group-item">
                         <span class="badge">Added : {{ $grade->created_at->format('Y m d') }}</span>
                         Grade {{ $key + 1 }} : <strong>{{ $grade->grade }}</strong>

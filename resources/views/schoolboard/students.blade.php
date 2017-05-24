@@ -9,7 +9,7 @@
 @section('content')
 
     <ul class="list-group">
-        @foreach($students as $student)
+        @foreach($schoolboard->students as $student)
             <li class="list-group-item">
                 <a href="{{  route("schoolboard.student", ['schoolboardId' => $schoolboard->id, 'studentId' => $student->id]) }}"
                    class="navbar-link">{{ $student->firstname }} {{ $student->lastname }}</a></li>
