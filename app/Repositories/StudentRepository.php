@@ -2,6 +2,9 @@
 namespace App\Repositories;
 
 use App\Student;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Mail\Mailer;
 
 /**
  * Class StudentRepository
@@ -19,17 +22,17 @@ class StudentRepository
      * StudentRepository constructor.
      * @param Student $student
      */
-    public function __construct(Student $student)
+    public function __construct(Student $student )
     {
         $this->students = $student;
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function all()
     {
-        return $this->students->all();
+        return $this->students->with(['schoolboard', 'grades' ])->paginate(5);
     }
 
     /**
@@ -38,10 +41,6 @@ class StudentRepository
      */
     public function findOne($studentId)
     {
-        return $this->students->where( 'id', $studentId )
-                    ->with([
-                        'schoolboard',
-                        'grades'
-                    ])->first();
+        return $this->students->with([ 'schoolboard', 'grades' ])->findOrFail($studentId);
     }
 }

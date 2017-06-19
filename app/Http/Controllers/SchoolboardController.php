@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\RedirectResponse;
 use App\Repositories\StudentRepository;
-use App\Student;
-use App\Schoolboard;
 use App\Repositories\SchoolBoardRepository;
 use App\Http\Requests\StudentGradeFromRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 
 /**
  * Class SchoolboardController
@@ -22,6 +20,8 @@ class SchoolboardController extends Controller
      */
     public function index(SchoolBoardRepository $schoolBoardRepository)
     {
+        echo '<pre>';
+        print_r($schoolBoardRepository->join());die();
         return view('schoolboard.index', ['schoolboards' => $schoolBoardRepository->all()]);
     }
 
@@ -49,7 +49,7 @@ class SchoolboardController extends Controller
      * @param $studentId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function student( StudentRepository $students, $schoolboardId , $studentId)
+    public function student( StudentRepository $students , $schoolboardId , $studentId)
     {
         $student = $students->findOne($studentId);
         if (empty($student)) {
@@ -57,7 +57,7 @@ class SchoolboardController extends Controller
         }
 
         return  view('schoolboard.student', [
-            'student'       => $student
+            'student' => $student
         ]);
     }
 

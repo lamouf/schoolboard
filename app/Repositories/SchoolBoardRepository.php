@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Schoolboard;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class SchoolBoardRepository
@@ -10,6 +11,10 @@ use App\Schoolboard;
  */
 class SchoolBoardRepository
 {
+
+    /**
+     * @var Schoolboard
+     */
     protected $schoolboard;
 
     /**
@@ -35,9 +40,21 @@ class SchoolBoardRepository
      */
     public function findOne( $schoolBoardId )
     {
-        return $this->schoolboard->where( 'id', $schoolBoardId )
-                    ->with([
-                        'students' => function ($query){ return $query->with(['grades']); }
-                    ])->first();
+        return $this->schoolboard->where( 'id', $schoolBoardId )->with( ['students'] )->first();
     }
+
+
+    /**
+     * @return mixed
+     */
+    public function join()
+    {
+        $schoolboards = DB::table('schoolboards')
+            ->join('students', 'schoolboards.id', '=', 'students.schoolboard_id')
+            ->join('grades', 'students.id', '=', 'grades.student_id')
+            ->select('schoolboards.*', 'students.*', 'grades.*')
+            ->get();
+        return $schoolboards;
+    }
+
 }

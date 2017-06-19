@@ -11,7 +11,10 @@ use Illuminate\Database\Eloquent\Model;
 class Grade extends Model
 {
 
-    protected $visible = ['grade'];
+    /**
+     * @var array
+     */
+    protected $visible = ['id' , 'grade'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

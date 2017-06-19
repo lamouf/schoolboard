@@ -18,7 +18,7 @@
                             <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" />
                         </div>
                         <div class="col-sm-6 col-md-8">
-                            <h4>{{ $student->fullName() }}</h4>
+                            <h4>{{ $student->full_name }}</h4>
                             <p>
                                 <i class="glyphicon glyphicon-envelope"></i>{{ $student->email }}
                                 <br />
@@ -33,7 +33,7 @@
 
             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
                 <div class="page-header">
-                    <h1>{{ $student->fullName() }} Grades</h1>
+                    <h1>{{ $student->full_name }} Grades</h1>
                     <h2>Average : {{ $student->getAverageGrades()['avg'] }}</h2>
                 </div>
             </div>

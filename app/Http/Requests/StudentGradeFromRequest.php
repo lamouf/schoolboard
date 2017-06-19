@@ -2,11 +2,15 @@
 
 namespace App\Http\Requests;
 
-use App\Grade;
-use App\Student;
-use App\Services\DataConverter;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Foundation\Http\FormRequest;
+use App\ {
+    Grade ,
+    Student ,
+    Services\DataConverter
+};
+use Illuminate\ {
+    Support\Facades\Log ,
+    Foundation\Http\FormRequest
+};
 
 /**
  * @property mixed schoolboard_id
@@ -16,8 +20,6 @@ use Illuminate\Foundation\Http\FormRequest;
 class StudentGradeFromRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
     public function authorize()
@@ -26,8 +28,6 @@ class StudentGradeFromRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
      * @return array
      */
     public function rules()
@@ -39,6 +39,9 @@ class StudentGradeFromRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return mixed
+     */
     public function save()
     {
         $student = Student::where(['schoolboard_id' => $this->schoolboard_id, 'id' => $this->student_id ])->first();
@@ -53,7 +56,7 @@ class StudentGradeFromRequest extends FormRequest
                 $result = $student->getAverageGrades();
                 $data = [
                     'id'        => $student->id,
-                    'name'      => $student->fullName(),
+                    'name'      => $student->full_name,
                     'grades'    => $grades,
                     'average'   => $result['avg'],
                     'final'     => ($result['succeeded']) ? 'Success' : 'Fail'

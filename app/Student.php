@@ -14,6 +14,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Student extends Model
 {
+    /**
+     * @var array
+     */
+    protected $visible = ['id', 'firstname', 'lastname', 'url', 'schoolboard', 'grades'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -52,9 +56,9 @@ class Student extends Model
     /**
      * @return string
      */
-    public function fullName()
+    public function getFullNameAttribute()
     {
-        return sprintf('%s %s', ucfirst($this->firstname) , ucfirst($this->lastname));
+        return sprintf('%s %s', ucfirst($this->attributes['firstname']) , ucfirst($this->attributes['lastname']));
     }
 
     /**

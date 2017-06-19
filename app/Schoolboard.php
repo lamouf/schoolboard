@@ -18,6 +18,8 @@ class Schoolboard extends Model
     const MINIMAL_GRADE_TO_PASS = 7;
     const MAXIMAL_GRADES_FOR_STUDENT = 4;
 
+    protected $visible = ['id' , 'name', 'students'];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

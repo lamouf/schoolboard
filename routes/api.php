@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/student', function (Request $request) {
-//    return App\Student::find(1);
-});
+Route::get('/students', 'Api\StudentController@getAll')->name('api.student.all');
+Route::get('/students/{studentId}', 'Api\StudentController@getOne')->name('api.student.one');
+Route::get('/schoolboards', 'Api\SchoolBoardController@getAll')->name('api.schoolboard.all');
+Route::get('/schoolboards/{schoolboardId}', 'Api\SchoolBoardController@getOne')->name('api.schoolboard.one');
