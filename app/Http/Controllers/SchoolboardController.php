@@ -20,8 +20,6 @@ class SchoolboardController extends Controller
      */
     public function index(SchoolBoardRepository $schoolBoardRepository)
     {
-        echo '<pre>';
-        print_r($schoolBoardRepository->join());die();
         return view('schoolboard.index', ['schoolboards' => $schoolBoardRepository->all()]);
     }
 
